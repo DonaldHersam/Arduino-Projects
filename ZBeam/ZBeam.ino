@@ -94,27 +94,27 @@ void loop() {
 
 int myTime = millis();
 touchDirection = 1; //Move to the left
-
-while(1){
   TouchProbeMotor(touchDirection);
-  if (state != touchDirection){
-    
-    moveCentimeters(5,touchDirection);
-    delay(100);
-    Input = myEnc.read();
-    Input = Input * 0.06; //Steps to u-meter conversion
-    Serial.print(Input);
-    
-    moveCentimeters(10,touchDirection);
-    delay(100);
-    Input = myEnc.read();
-    Input = Input * 0.06; //Steps to u-meter conversion
-    Serial.print(" ");
-    Serial.print(Input);
-    Serial.print(" ");
-    Serial.println(millis()-myTime);
-    touchDirection = 1; //Move to the left
+  if (state != touchDirection){ //Define zero at a hard stop
 
+    while(1){
+      moveCentimeters(5,0);
+      delay(250);
+      Input = myEnc.read();
+      Input = Input * 0.06; //Steps to u-meter conversion
+      Serial.print(Input);
+    
+      moveCentimeters(10,0);
+      delay(250);
+      Input = myEnc.read();
+      Input = Input * 0.06; //Steps to u-meter conversion
+      Serial.print(" ");
+      Serial.print(Input);
+      Serial.print(" ");
+      Serial.println(millis()-myTime);
+      touchDirection = 1; //Move to the left
+
+      moveCentimeters(15,1);
   }
 }
 
